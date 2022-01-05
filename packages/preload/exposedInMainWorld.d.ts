@@ -10,5 +10,8 @@ interface Window {
    * @example
    * window.nodeCrypto('data')
    */
-  readonly nodeCrypto: { sha256sum(data: import('crypto').BinaryLike): string; openFileExplorer(): Promise<unknown> };
+  readonly nodeCrypto: {
+    sha256sum(data: import('crypto').BinaryLike): string;
+    openFileExplorer(): Promise<Electron.OpenDialogReturnValue>;
+  };
 }

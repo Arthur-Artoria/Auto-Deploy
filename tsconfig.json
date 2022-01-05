@@ -3,18 +3,24 @@
     "module": "esnext",
     "target": "esnext",
     "sourceMap": true,
-    "moduleResolution": "Node",
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
     "strict": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "jsx": "react",
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types",
-    ],
+    "esModuleInterop": true,
+    "incremental": false,
+    "skipLibCheck": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowUmdGlobalAccess": true,
+    "importHelpers": true,
+    "types": ["node"],
+    "typeRoots": ["node_modules/@types"],
     "lib": ["ESNext"]
   },
+
+  "include": ["packages/**/*.ts", "packages/**/*.tsx", "types/**/*.d.ts"],
+
 }

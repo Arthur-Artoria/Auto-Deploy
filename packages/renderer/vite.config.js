@@ -4,8 +4,10 @@ import { chrome } from '../../.electron-vendors.cache.json';
 import { join } from 'path';
 import { builtinModules } from 'module';
 import react from '@vitejs/plugin-react';
+import AutoImport from 'unplugin-auto-import/vite';
 
 const PACKAGE_ROOT = __dirname;
+import WindiCSS from 'vite-plugin-windicss';
 
 /**
  * @type {import('vite').UserConfig}
@@ -19,7 +21,18 @@ const config = {
       '/@/': join(PACKAGE_ROOT, 'src') + '/'
     }
   },
-  plugins: [react()],
+  plugins: [
+    react(),
+    WindiCSS(),
+    AutoImport({
+      imports: [
+        {
+          '/@/views/Projects/constants.ts': ['DeployTypes']
+        }
+      ],
+      dts: 'types/auto-imports.d.ts'
+    })
+  ],
   base: '',
   server: {
     fs: {

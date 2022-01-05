@@ -1,22 +1,14 @@
-import { Button } from '@mui/material';
-import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { ProjectForm } from './components/ProjectForm';
+import { useProject } from './hooks/Project';
+import { ProjectProvider } from './ProjectProvider';
 
 export function CreateProject() {
-  const handleSelectProjectPath = useCallback(async () => {
-    const data = await window.nodeCrypto.openFileExplorer();
-    console.log(data);
-  }, []);
+  const [project, updateProject] = useProject();
 
   return (
-    <div>
-      <Link to="/">
-        <Button>返回列表</Button>
-      </Link>
-
-      <Button variant="contained" onClick={handleSelectProjectPath}>
-        选择项目地址
-      </Button>
-    </div>
+    <ProjectProvider initialValue={{ project, updateProject }}>
+      <ProjectForm project={project} />;
+    </ProjectProvider>
   );
 }

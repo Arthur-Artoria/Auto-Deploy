@@ -34,10 +34,9 @@ export const nodeCrypto = {
   },
 
   openFileExplorer() {
-    return new Promise((resolve) => {
+    return new Promise<Electron.OpenDialogReturnValue>((resolve) => {
       ipcRenderer.send('OPEN_FILE_EXPLORER');
       ipcRenderer.once('OPEN_FILE_EXPLORER', (event, data) => {
-        console.log(event);
         resolve(data);
       });
     });

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { MainContainer } from './layouts/MainContainer';
 import { Projects } from './views/Projects';
-import { CreateProject } from './views/Projects/create';
+import { CreateProject } from './views/Projects/Create';
 
 export function App() {
   return (
