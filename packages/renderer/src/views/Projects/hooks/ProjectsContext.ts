@@ -1,14 +1,16 @@
-import { createContext, Dispatch, useContext } from 'react';
-import { Action, initialProjects } from './ProjectsReducer';
+import { createContext, Dispatch } from 'react';
+import { ProjectsReducerAction, initialProjects } from './ProjectsReducer';
+import { useCustomContext } from '/@/tools/common';
 
 export const ProjectsContext = createContext<Project[]>(initialProjects);
 
-export const ProjectsDispatchContext = createContext<Dispatch<Action> | null>(null);
+export const ProjectsDispatchContext =
+  createContext<Dispatch<ProjectsReducerAction> | null>(null);
 
 export function useProjects() {
-  return useContext(ProjectsContext);
+  return useCustomContext(ProjectsContext);
 }
 
-export function useProjectsDispathc() {
-  return useContext(ProjectsDispatchContext);
+export function useProjectsDispatch() {
+  return useCustomContext(ProjectsDispatchContext);
 }

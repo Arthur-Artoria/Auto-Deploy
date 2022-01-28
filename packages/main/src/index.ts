@@ -1,10 +1,10 @@
-import { app, BrowserWindow, dialog, ipcMain } from "electron";
-import { join } from "path";
-import { URL } from "url";
-import "./security-restrictions";
-
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { join } from 'path';
+import { URL } from 'url';
+import './security-restrictions';
+import { startListen } from './ipc';
 const isSingleInstance = app.requestSingleInstanceLock();
-const isDevelopment = import.meta.env.MODE === "development";
+const isDevelopment = import.meta.env.MODE === 'development';
 
 if (!isSingleInstance) {
   app.quit();
@@ -17,15 +17,15 @@ app.disableHardwareAcceleration();
 if (isDevelopment) {
   app
     .whenReady()
-    .then(() => import("electron-devtools-installer"))
+    .then(() => import('electron-devtools-installer'))
     .then(({ default: installExtension, VUEJS3_DEVTOOLS }) =>
       installExtension(VUEJS3_DEVTOOLS, {
         loadExtensionOptions: {
-          allowFileAccess: true,
-        },
+          allowFileAccess: true
+        }
       })
     )
-    .catch((e) => console.error("Failed install extension:", e));
+    .catch((e) => console.error('Failed install extension:', e));
 }
 
 let mainWindow: BrowserWindow | null = null;
@@ -36,8 +36,8 @@ const createWindow = async () => {
     webPreferences: {
       nativeWindowOpen: true,
       webviewTag: false, // The webview tag is not recommended. Consider alternatives like iframe or Electron's BrowserView. https://www.electronjs.org/docs/latest/api/webview-tag#warning
-      preload: join(__dirname, "../../preload/dist/index.cjs"),
-    },
+      preload: join(__dirname, '../../preload/dist/index.cjs')
+    }
   });
 
   /**
@@ -46,7 +46,7 @@ const createWindow = async () => {
    *
    * @see https://github.com/electron/electron/issues/25012
    */
-  mainWindow.on("ready-to-show", () => {
+  mainWindow.on('ready-to-show', () => {
     mainWindow?.show();
 
     if (isDevelopment) {
@@ -63,14 +63,14 @@ const createWindow = async () => {
     isDevelopment && import.meta.env.VITE_DEV_SERVER_URL !== undefined
       ? import.meta.env.VITE_DEV_SERVER_URL
       : new URL(
-          "../renderer/dist/index.html",
-          "file://" + __dirname
+          '../renderer/dist/index.html',
+          'file://' + __dirname
         ).toString();
 
   await mainWindow.loadURL(pageUrl);
 };
 
-app.on("second-instance", () => {
+app.on('second-instance', () => {
   // Someone tried to run a second instance, we should focus our window.
   if (mainWindow) {
     if (mainWindow.isMinimized()) mainWindow.restore();
@@ -78,8 +78,8 @@ app.on("second-instance", () => {
   }
 });
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
@@ -87,18 +87,21 @@ app.on("window-all-closed", () => {
 app
   .whenReady()
   .then(createWindow)
-  .catch((e) => console.error("Failed create window:", e));
+  .catch((e) => console.error('Failed create window:', e));
 
 // Auto-updates
 if (import.meta.env.PROD) {
   app
     .whenReady()
-    .then(() => import("electron-updater"))
+    .then(() => import('electron-updater'))
     .then(({ autoUpdater }) => autoUpdater.checkForUpdatesAndNotify())
-    .catch((e) => console.error("Failed check updates:", e));
+    .catch((e) => console.error('Failed check updates:', e));
 }
 
-ipcMain.on("OPEN_FILE_EXPLORER", async (event) => {
-  const res = await dialog.showOpenDialog({ properties: ["openDirectory"] });
-  event.sender.send("OPEN_FILE_EXPLORER", res);
+ipcMain.on('OPEN_FILE_EXPLORER', async (event) => {
+  const res = await dialog.showOpenDialog({ properties: ['openDirectory'] });
+  console.log(res);
+  event.sender.send('OPEN_FILE_EXPLORER', res);
 });
+
+startListen();

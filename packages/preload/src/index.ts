@@ -1,7 +1,10 @@
 import type { BinaryLike } from 'crypto';
 import { createHash } from 'crypto';
 import { contextBridge, ipcRenderer } from 'electron';
-
+import { IPC_MESSAGES } from './constants/common';
+import { ipcPromise } from './tools/common';
+import path from 'path';
+import jsonFile from 'jsonfile';
 /**
  * The "Main World" is the JavaScript context that your main renderer code runs in.
  * By default, the page you load in your renderer executes code in this world.
@@ -36,10 +39,18 @@ export const nodeCrypto = {
   openFileExplorer() {
     return new Promise<Electron.OpenDialogReturnValue>((resolve) => {
       ipcRenderer.send('OPEN_FILE_EXPLORER');
-      ipcRenderer.once('OPEN_FILE_EXPLORER', (event, data) => {
+      ipcRenderer.once('OPEN_FILE_EXPLORER', (_event, data) => {
         resolve(data);
       });
     });
+  },
+
+  saveProjectsConfig(projects: Project[]) {
+    return ipcPromise<void>(IPC_MESSAGES.SAVE_PROJECTS_CONFIG, projects);
+  },
+
+  getProjects(): Promise<Project[]> {
+    return ipcPromise<Project[]>(IPC_MESSAGES.GET_PROJECTS);
   }
 };
 

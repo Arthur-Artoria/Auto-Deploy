@@ -21,18 +21,7 @@ const config = {
       '/@/': join(PACKAGE_ROOT, 'src') + '/'
     }
   },
-  plugins: [
-    react(),
-    WindiCSS(),
-    AutoImport({
-      imports: [
-        {
-          '/@/views/Projects/constants.ts': ['DeployTypes']
-        }
-      ],
-      dts: 'types/auto-imports.d.ts'
-    })
-  ],
+  plugins: [react(), WindiCSS()],
   base: '',
   server: {
     fs: {

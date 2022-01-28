@@ -23,7 +23,8 @@ function updateVendors() {
   const electronRelease = getVendors();
 
   const nodeMajorVersion = electronRelease.node.split('.')[0];
-  const chromeMajorVersion = electronRelease.v8.split('.')[0] + electronRelease.v8.split('.')[1];
+  const chromeMajorVersion =
+    electronRelease.v8.split('.')[0] + electronRelease.v8.split('.')[1];
 
   const browserslistrcPath = path.resolve(process.cwd(), '.browserslistrc');
 

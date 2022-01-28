@@ -1,0 +1,64 @@
+[
+  {
+    "baseInfo": {
+      "name": "未命名0",
+      "localPath": "D:\\work-space\\Auto-Deploy"
+    },
+    "id": "3d4a3eb9-e4dc-4d98-ab43-1d178a480315",
+    "build": {
+      "command": "yarn build"
+    },
+    "deploys": [
+      {
+        "id": "5fc1d38c-1b56-4acf-aa23-751399ac189f",
+        "type": "SSH",
+        "content": {
+          "host": "123",
+          "username": ""
+        }
+      }
+    ]
+  },
+  {
+    "baseInfo": {
+      "name": "未命名1",
+      "localPath": "D:\\work-space\\Auto-Deploy"
+    },
+    "id": "98e4fc45-4186-49bd-8ed7-175a2d920b08",
+    "build": {
+      "command": "yarn build"
+    },
+    "deploys": [
+      {
+        "id": "3dba6d76-dad6-4e2d-9168-2cea3a40405b",
+        "type": "SSH",
+        "content": {
+          "host": "",
+          "username": ""
+        }
+      }
+    ]
+  },
+  {
+    "baseInfo": {
+      "name": "未命名2",
+      "localPath": "D:\\work-space\\Auto-Deploy\\tests"
+    },
+    "id": "32ef91e9-052c-4573-aaa4-ab56f3c582ae",
+    "build": {
+      "command": "yarn build"
+    },
+    "deploys": [
+      {
+        "id": "33389d3a-61b9-4b45-a5b6-3b0d23b0bb3c",
+        "type": "OSS",
+        "content": {
+          "accessKeyId": "243",
+          "accessKeySecret": "234",
+          "roleArn": "",
+          "endpoint": ""
+        }
+      }
+    ]
+  }
+]

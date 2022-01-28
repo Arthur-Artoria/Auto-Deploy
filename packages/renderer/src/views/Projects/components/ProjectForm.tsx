@@ -1,29 +1,36 @@
-import { Box, Button, TextField } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import { Box, Button, FormControl } from '@mui/material';
+import React from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { useProjectContext } from '../hooks/ProjectContext';
+import { AppTextField } from './AppTextField';
 import { ProjectDeploys } from './ProjectDeploys';
 
 interface ProjectProperties {
   project: Project;
+  onSubmit: (project: Project) => void;
 }
 
-/**20
- *
- * TODO ProjectContext ProjectDispatchContext ProjectReducer
- * TODO react-hook-form
+/**
  *
  * @param param
  * @returns
  */
-export function ProjectForm({ project }: ProjectProperties) {
-  const { updateProject } = useProjectContext();
+export function ProjectForm({ project, onSubmit }: ProjectProperties) {
+  const methods = useForm({ defaultValues: project });
+  const { control, getValues, setValue } = methods;
+  const deploys = useWatch({ control, name: 'deploys' });
 
-  const [projectPath, setProjectPath] = useState<string>('');
-  const handleSelectProjectPath = useCallback(async () => {
+  const handleSelectProjectPath = async () => {
     const data = await window.nodeCrypto.openFileExplorer();
-    setProjectPath(data.filePaths[0] || '');
-  }, []);
+    const projectPath = data.filePaths[0] || '';
+
+    setValue('baseInfo.localPath', projectPath);
+  };
+
+  const handleSubmit = async () => {
+    const project = getValues();
+    onSubmit(project);
+  };
 
   return (
     <div>
@@ -31,35 +38,46 @@ export function ProjectForm({ project }: ProjectProperties) {
         <Button>返回列表</Button>
       </Link>
 
-      <Box component="form" className="w-600px m-auto flex flex-col">
-        <TextField
-          label="项目名称"
-          margin="normal"
-          value={project.baseInfo.name}
-          onChange={(event) =>
-            updateProject((draft) => {
-              draft.baseInfo.name = event.target.value;
-            })
-          }
-        />
+      <FormProvider {...methods}>
+        <Box component="form" className="w-600px m-auto flex flex-col">
+          <AppTextField
+            name="baseInfo.name"
+            textFieldProps={{ label: '项目名称' }}
+          />
 
-        <TextField
-          fullWidth
-          label="请输入路径"
-          variant="outlined"
-          value={projectPath}
-          margin="normal"
-          onChange={(event) => setProjectPath(event.target.value)}
-          InputProps={{
-            readOnly: true,
-            endAdornment: <Button onClick={handleSelectProjectPath}>浏览</Button>
-          }}
-        />
+          <AppTextField
+            name="baseInfo.localPath"
+            textFieldProps={{
+              label: '请输入路径',
+              InputProps: {
+                readOnly: true,
+                endAdornment: (
+                  <Button onClick={handleSelectProjectPath}>浏览</Button>
+                )
+              }
+            }}
+          />
 
-        <TextField label="请输入构建命令" variant="outlined" defaultValue="yarn build" margin="normal" fullWidth />
+          <AppTextField
+            name="build.command"
+            textFieldProps={{
+              label: '请输入构建命令'
+            }}
+          />
 
-        <ProjectDeploys deploys={project.deploys || []} />
-      </Box>
+          {/* Deploys */}
+          <ProjectDeploys deploys={deploys} />
+
+          {/* Submit */}
+          <footer className="flex justify-center">
+            <FormControl margin="normal">
+              <Button variant="contained" onClick={handleSubmit}>
+                Submit
+              </Button>
+            </FormControl>
+          </footer>
+        </Box>
+      </FormProvider>
     </div>
   );
 }
