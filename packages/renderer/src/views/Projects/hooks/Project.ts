@@ -8,18 +8,7 @@ const getSerialNumber = (projects: Project[], prefix: string) =>
     return name.startsWith(prefix);
   }).length;
 
-export function useProject(): Project;
-export function useProject(id: string): Project | null;
-export function useProject(id?: string): Project | null {
-  const projects = useProjects();
-
-  if (id) {
-    const project = projects.find((project) => project.id === id);
-
-    if (!project) return null;
-    return project;
-  }
-
+function getDefaultProject(projects: Project[]): Project {
   const DEFAULT_PROJECT_NAME_PREFIX = '未命名';
   const serial = getSerialNumber(projects, DEFAULT_PROJECT_NAME_PREFIX);
   const name = `${DEFAULT_PROJECT_NAME_PREFIX}${serial}`;
@@ -34,4 +23,26 @@ export function useProject(id?: string): Project | null {
   };
 
   return project;
+}
+
+/**
+ * 获取缺省的 Project
+ */
+export function useProject(): Project;
+/**
+ * 根据id获取对应Project
+ * @param id - Project id
+ */
+export function useProject(id: string): Project | null;
+export function useProject(id?: string): Project | null {
+  const projects = useProjects();
+
+  if (id) {
+    const project = projects.find((project) => project.id === id);
+
+    if (!project) return null;
+    return project;
+  }
+
+  return getDefaultProject(projects);
 }

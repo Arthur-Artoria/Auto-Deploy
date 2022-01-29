@@ -13,9 +13,13 @@ export const startListen = () => {
   );
 
   ipcMain.on(IPC_MESSAGES.GET_PROJECTS, async (event) => {
-    console.log(PROJECTS_CONFIG_PATH);
-    const projects = await jsonFile.readFile(PROJECTS_CONFIG_PATH);
-
-    event.sender.send(IPC_MESSAGES.GET_PROJECTS, projects);
+    try {
+      const projects = await jsonFile.readFile(PROJECTS_CONFIG_PATH);
+  
+      event.sender.send(IPC_MESSAGES.GET_PROJECTS, projects);
+      
+    } catch (error) {
+      return Promise.reject(null)
+    }
   });
 };

@@ -19,7 +19,7 @@ export function ProjectsProvider({
   useEffect(() => {
     (async () => {
       const projects = await window.nodeCrypto.getProjects();
-      console.log(projects);
+
       dispatch({ type: ProjectsRecucerActionType.INIT, payload: projects });
     })();
   }, []);

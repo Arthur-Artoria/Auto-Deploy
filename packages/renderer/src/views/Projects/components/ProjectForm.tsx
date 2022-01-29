@@ -1,5 +1,5 @@
 import { Box, Button, FormControl } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AppTextField } from './AppTextField';
@@ -17,8 +17,13 @@ interface ProjectProperties {
  */
 export function ProjectForm({ project, onSubmit }: ProjectProperties) {
   const methods = useForm({ defaultValues: project });
-  const { control, getValues, setValue } = methods;
+  const { control, getValues, setValue, reset } = methods;
   const deploys = useWatch({ control, name: 'deploys' });
+
+  useEffect(() => {
+    const curProject = getValues();
+    if (curProject.id !== project.id) reset(project);
+  }, [project.id]);
 
   const handleSelectProjectPath = async () => {
     const data = await window.nodeCrypto.openFileExplorer();

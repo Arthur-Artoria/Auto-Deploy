@@ -3,8 +3,6 @@ import { createHash } from 'crypto';
 import { contextBridge, ipcRenderer } from 'electron';
 import { IPC_MESSAGES } from './constants/common';
 import { ipcPromise } from './tools/common';
-import path from 'path';
-import jsonFile from 'jsonfile';
 /**
  * The "Main World" is the JavaScript context that your main renderer code runs in.
  * By default, the page you load in your renderer executes code in this world.

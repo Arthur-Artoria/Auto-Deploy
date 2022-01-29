@@ -5,13 +5,17 @@ import {
   Radio,
   RadioGroup
 } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { DeployTypes } from '../constants';
 import {
   ProjectDeployContext,
   useProjectDeployContext
 } from '../hooks/ProjectDeploy.context';
+import {
+  DeployReducerActionType,
+  useDeployReducer
+} from '../hooks/ProjectDeploy.reducer';
 import { FormField } from './FormField';
 import { OSSEnvironment } from './OSSEnvironment';
 import { RemoteExplorer } from './RemoteExplorer';
@@ -22,24 +26,28 @@ interface ProjectDeploysProperties {
 
 function ProjectDeploy() {
   const { deploy, index } = useProjectDeployContext();
-  const { setValue, control } = useFormContext<Project>();
+  const { setValue, getValues } = useFormContext<Project>();
+  const [deployContentCache, dispatch] = useDeployReducer(deploy);
   const name: `deploys.${number}` = `deploys.${index}`;
-  const deployType = useWatch({ control, name: `${name}.type` });
 
-  useEffect(() => {
-    const SSHContent: SSHEnvironment = { host: '', username: '' };
-    const OSSContent: OSSEnvironment = {
-      accessKeyId: '',
-      accessKeySecret: '',
-      roleArn: '',
-      endpoint: ''
+  const handleDeployEnvironmentChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const deploy = getValues(`${name}`);
+    const nextDeployType: DeployTypes = event.target.value as DeployTypes;
+    const nextDeployContent = deployContentCache.get(nextDeployType);
+
+    dispatch({ type: DeployReducerActionType.SET, payload: deploy });
+    if (!nextDeployContent) return;
+
+    const nextDeploy = {
+      id: deploy.id,
+      type: nextDeployType,
+      content: nextDeployContent
     };
 
-    const content: ProjectDeploy['content'] =
-      deployType === DeployTypes.SSH ? SSHContent : OSSContent;
-
-    setValue(`${name}.content`, content);
-  }, [deployType]);
+    setValue(`${name}`, nextDeploy as ProjectDeploy);
+  };
 
   return (
     <li>
@@ -49,7 +57,12 @@ function ProjectDeploy() {
         <FormField
           name={`deploys.${index}.type`}
           render={({ field }) => (
-            <RadioGroup {...field} row aria-label="gender">
+            <RadioGroup
+              {...field}
+              row
+              aria-label="gender"
+              onChange={handleDeployEnvironmentChange}
+            >
               <FormControlLabel
                 value={DeployTypes.SSH}
                 control={<Radio />}

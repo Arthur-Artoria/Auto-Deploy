@@ -4,7 +4,7 @@ type DeployTypes =
 interface Deploy<T extends DeployTypes, C> {
   id: string;
   type: T;
-  content?: C;
+  content: C;
 }
 
 declare interface OSSEnvironment {

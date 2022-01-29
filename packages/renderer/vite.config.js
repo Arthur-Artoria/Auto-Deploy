@@ -1,13 +1,12 @@
 /* eslint-env node */
 
-import { chrome } from '../../.electron-vendors.cache.json';
-import { join } from 'path';
-import { builtinModules } from 'module';
 import react from '@vitejs/plugin-react';
-import AutoImport from 'unplugin-auto-import/vite';
+import { builtinModules } from 'module';
+import { join } from 'path';
+import WindiCSS from 'vite-plugin-windicss';
+import { chrome } from '../../.electron-vendors.cache.json';
 
 const PACKAGE_ROOT = __dirname;
-import WindiCSS from 'vite-plugin-windicss';
 
 /**
  * @type {import('vite').UserConfig}

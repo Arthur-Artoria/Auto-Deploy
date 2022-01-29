@@ -17,8 +17,7 @@
     "typecheck-main": "tsc --noEmit -p packages/main/tsconfig.json",
     "typecheck-preload": "tsc --noEmit -p packages/preload/tsconfig.json",
     "typecheck-renderer": "tsc --noEmit -p packages/renderer/tsconfig.json",
-    "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer",
-    "pretypecheck-renderer": "dts-cb -i packages/preload/src/**/*.ts -o packages/preload/exposedInMainWorld.d.ts"
+    "typecheck": "npm run typecheck-main && npm run typecheck-preload && npm run typecheck-renderer"
   },
   "devDependencies": {
     "@types/electron-devtools-installer": "2.2.0",
