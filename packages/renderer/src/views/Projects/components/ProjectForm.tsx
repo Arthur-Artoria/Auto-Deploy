@@ -23,7 +23,7 @@ export function ProjectForm({ project, onSubmit }: ProjectProperties) {
   useEffect(() => {
     const curProject = getValues();
     if (curProject.id !== project.id) reset(project);
-  }, [project.id]);
+  }, [getValues, project, reset]);
 
   const handleSelectProjectPath = async () => {
     const data = await window.nodeCrypto.openFileExplorer();

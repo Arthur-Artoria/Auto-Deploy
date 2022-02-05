@@ -4,7 +4,6 @@
     "target": "esnext",
     "sourceMap": true,
     "strict": true,
-    "isolatedModules": false,
     "jsx": "react",
     "esModuleInterop": true,
     "incremental": false,
@@ -16,9 +15,14 @@
     "forceConsistentCasingInFileNames": true,
     "allowUmdGlobalAccess": true,
     "importHelpers": true,
-    "types": ["node"],
     "typeRoots": ["node_modules/@types"],
-    "lib": ["ESNext"]
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "isolatedModules": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "noEmit": true,
+    "types": ["vite/client","node"],
+    
   },
 
   "include": ["packages/**/*.ts", "packages/**/*.tsx", "types/**/*.d.ts"],

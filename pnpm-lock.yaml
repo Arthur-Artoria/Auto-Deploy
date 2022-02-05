@@ -22,14 +22,18 @@ specifiers:
   electron-devtools-installer: 3.2.0
   electron-updater: 4.6.5
   eslint: 8.5.0
+  eslint-config-airbnb-base: ^15.0.0
+  eslint-config-airbnb-typescript: ^16.1.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-import: ^2.25.3
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-react: ^7.27.1
+  eslint-plugin-react-hooks: ^4.3.0
   immer: ^9.0.7
   jsonfile: ^6.1.0
   lodash: ^4.17.21
   nano-staged: 0.5.0
+  notistack: ^2.0.3
   playwright: 1.17.1
   prettier: ^2.5.1
   react: ^17.0.2
@@ -58,6 +62,7 @@ dependencies:
   immer: 9.0.7
   jsonfile: 6.1.0
   lodash: 4.17.21
+  notistack: 2.0.3_289d561bf7c393213a4f2143ee772c37
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-hook-form: 7.25.1_react@17.0.2
@@ -78,10 +83,13 @@ devDependencies:
   electron-builder: 22.14.5
   electron-devtools-installer: 3.2.0
   eslint: 8.5.0
+  eslint-config-airbnb-base: 15.0.0_f385d671d5f1c72a868db745a891bc1f
+  eslint-config-airbnb-typescript: 16.1.0_2ee6e877dc843a55db9ecc16135c7eab
   eslint-config-prettier: 8.3.0_eslint@8.5.0
   eslint-plugin-import: 2.25.3_eslint@8.5.0
   eslint-plugin-prettier: 4.0.0_94e1b6d3ce6ea916847122712570e9ae
   eslint-plugin-react: 7.27.1_eslint@8.5.0
+  eslint-plugin-react-hooks: 4.3.0_eslint@8.5.0
   nano-staged: 0.5.0
   playwright: 1.17.1
   prettier: 2.5.1
@@ -1634,6 +1642,10 @@ packages:
       xdg-basedir: 4.0.0
     dev: true
 
+  /confusing-browser-globals/1.0.11:
+    resolution: {integrity: sha512-JsPKdmh8ZkmnHxDk55FZ1TqVLvEQTvoByJZRN9jzI0UjxK/QgAmsphz7PGtqgPieQZ/CQcHWXCR7ATDNhGe+YA==}
+    dev: true
+
   /convert-source-map/1.8.0:
     resolution: {integrity: sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==}
     dependencies:
@@ -2202,6 +2214,35 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
+  /eslint-config-airbnb-base/15.0.0_f385d671d5f1c72a868db745a891bc1f:
+    resolution: {integrity: sha512-xaX3z4ZZIcFLvh2oUNvcX5oEofXda7giYmuplVxoOg5A7EXJMrUyqRgR+mhDhPK8LZ4PttFOBvCYDbX3sUoUig==}
+    engines: {node: ^10.12.0 || >=12.0.0}
+    peerDependencies:
+      eslint: ^7.32.0 || ^8.2.0
+      eslint-plugin-import: ^2.25.2
+    dependencies:
+      confusing-browser-globals: 1.0.11
+      eslint: 8.5.0
+      eslint-plugin-import: 2.25.3_eslint@8.5.0
+      object.assign: 4.1.2
+      object.entries: 1.1.5
+      semver: 6.3.0
+    dev: true
+
+  /eslint-config-airbnb-typescript/16.1.0_2ee6e877dc843a55db9ecc16135c7eab:
+    resolution: {integrity: sha512-W5Cq20KpEx5ZLC54bnVrC37zq2+WD956Kp/Ma3nYFRjT1v9KM63v+DPkrrmmrVqrlDKaD0ivm/qeYmyHV6qKlw==}
+    peerDependencies:
+      '@typescript-eslint/eslint-plugin': ^5.0.0
+      '@typescript-eslint/parser': ^5.0.0
+    dependencies:
+      '@typescript-eslint/eslint-plugin': 5.8.0_836011a006f4f5d67178564baf2b6d34
+      '@typescript-eslint/parser': 5.8.0_eslint@8.5.0+typescript@4.5.4
+      eslint-config-airbnb-base: 15.0.0_f385d671d5f1c72a868db745a891bc1f
+    transitivePeerDependencies:
+      - eslint
+      - eslint-plugin-import
+    dev: true
+
   /eslint-config-prettier/8.3.0_eslint@8.5.0:
     resolution: {integrity: sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==}
     hasBin: true
@@ -2264,6 +2305,15 @@ packages:
       eslint-config-prettier: 8.3.0_eslint@8.5.0
       prettier: 2.5.1
       prettier-linter-helpers: 1.0.0
+    dev: true
+
+  /eslint-plugin-react-hooks/4.3.0_eslint@8.5.0:
+    resolution: {integrity: sha512-XslZy0LnMn+84NEG9jSGR6eGqaZB3133L8xewQo3fQagbQuGt7a63gf+P1NGKZavEYEC3UXaWEAA/AqDkuN6xA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
+    dependencies:
+      eslint: 8.5.0
     dev: true
 
   /eslint-plugin-react/7.27.1_eslint@8.5.0:
@@ -3384,6 +3434,29 @@ packages:
     resolution: {integrity: sha512-9UZCFRHQdNrfTpGg8+1INIg93B6zE0aXMVFkw1WFwvO4SlZywU6aLg5Of0Ap/PgcbSw4LNxvMWXMeugwMCX0AA==}
     engines: {node: '>=8'}
     dev: true
+
+  /notistack/2.0.3_289d561bf7c393213a4f2143ee772c37:
+    resolution: {integrity: sha512-krmVFtTO9kEY1Pa4NrbyexrjiRcV6TqBM2xLx8nuDea1g96Z/OZfkvVLmYKkTvoSJ3jyQntWK16z86ssW5kt4A==}
+    peerDependencies:
+      '@emotion/react': ^11.4.1
+      '@emotion/styled': ^11.3.0
+      '@mui/material': ^5.0.0
+      react: ^16.8.0 || ^17.0.0
+      react-dom: ^16.8.0 || ^17.0.0
+    peerDependenciesMeta:
+      '@emotion/react':
+        optional: true
+      '@emotion/styled':
+        optional: true
+    dependencies:
+      '@emotion/react': 11.7.1_cfedea9b3ed0faf0dded75c187406c5e
+      '@emotion/styled': 11.6.0_f08cba2053577b4854d3e19df4a0b904
+      '@mui/material': 5.2.5_fa2645acd9a035406d0184711710de51
+      clsx: 1.1.1
+      hoist-non-react-statics: 3.3.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
 
   /npm-conf/1.1.3:
     resolution: {integrity: sha512-Yic4bZHJOt9RCFbRP3GgpqhScOY4HH3V2P8yBj6CeYq118Qr+BLXqT2JvpJ00mryLESpgOxf5XlFv4ZjXxLScw==}

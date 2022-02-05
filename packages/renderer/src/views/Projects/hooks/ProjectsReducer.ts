@@ -11,35 +11,44 @@ interface ProjectsAction<T extends ProjectsRecucerActionType, P = unknown> {
 
 export type ProjectsReducerAction =
   | ProjectsAction<
-      | ProjectsRecucerActionType.CHANGED
       | ProjectsRecucerActionType.ADDED
-      | ProjectsRecucerActionType.DELETED,
+      | ProjectsRecucerActionType.DELETED
+      | ProjectsRecucerActionType.CHANGED,
       Project
     >
+  // | ProjectsAction<ProjectsRecucerActionType.ADDED, Project>
+  // | ProjectsAction<ProjectsRecucerActionType.DELETED, Project>
+  // | ProjectsAction<ProjectsRecucerActionType.CHANGED, Project>
   | ProjectsAction<ProjectsRecucerActionType.INIT, Project[]>;
 
 export function projectsReducer(
   projects: Project[],
   action: ProjectsReducerAction
 ): Project[] {
+  const { INIT, DELETED, ADDED, CHANGED } = ProjectsRecucerActionType;
+
   switch (action.type) {
-    case ProjectsRecucerActionType.INIT: {
+    case INIT: {
       return [...action.payload];
     }
 
-    case ProjectsRecucerActionType.ADDED: {
+    case ADDED: {
       return [...projects, action.payload];
     }
 
-    case ProjectsRecucerActionType.CHANGED: {
+    case CHANGED: {
       const project = action.payload;
       return projects.map((item) => {
-        return item.baseInfo?.name === project.baseInfo?.name ? project : item;
+        return item.id === project.id ? project : item;
       });
     }
 
+    case DELETED: {
+      return projects.filter((project) => project.id !== action.payload.id);
+    }
+
     default: {
-      throw Error(`未知的 操作：${action.type}`);
+      throw Error(`未知的 操作：${action}`);
     }
   }
 }

@@ -3,19 +3,32 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectForm } from './components/ProjectForm';
 import { useProject } from './hooks/Project';
 import { useProjects, useProjectsDispatch } from './hooks/ProjectsContext';
-import { ProjectsRecucerActionType } from './hooks/ProjectsReducer';
+import {
+  ProjectsRecucerActionType,
+  projectsReducer,
+  ProjectsReducerAction
+} from './hooks/ProjectsReducer';
+import { useToast } from '/@/hooks/useToast';
 
 export function CreateProject() {
   const project = useProject();
   const projects = useProjects();
   const navigate = useNavigate();
   const dispatch = useProjectsDispatch();
+  const { enqueueSnackbar } = useToast();
 
   const handleSubmit = async (project: Project) => {
-    const newProjets = [...projects, project];
+    const action: ProjectsReducerAction = {
+      type: ProjectsRecucerActionType.ADDED,
+      payload: project
+    };
+
+    const newProjets = projectsReducer(projects, action);
 
     await window.nodeCrypto.saveProjectsConfig(newProjets);
-    dispatch({ type: ProjectsRecucerActionType.ADDED, payload: project });
+
+    enqueueSnackbar.success('创建成功！');
+    dispatch({ type: ProjectsRecucerActionType.INIT, payload: newProjets });
     navigate(`/projects/${project.id}`, { replace: true });
   };
 
