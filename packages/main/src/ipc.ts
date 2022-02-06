@@ -1,9 +1,21 @@
-import { ipcMain } from 'electron';
+import { dialog, ipcMain, OpenDialogOptions } from 'electron';
 import jsonFile from 'jsonfile';
 import { IPC_MESSAGES } from '../../preload/src/constants/common';
 import { PROJECTS_CONFIG_PATH } from './constants';
 
 export const startListen = () => {
+  ipcMain.on(
+    IPC_MESSAGES.OPEN_FILE_EXPLORER,
+    async (
+      event,
+      options: OpenDialogOptions = {properties: ['openDirectory']}
+    ) => {
+      const res = await dialog.showOpenDialog(options);
+      
+      event.sender.send('OPEN_FILE_EXPLORER', res);
+    }
+  );
+
   ipcMain.on(
     IPC_MESSAGES.SAVE_PROJECTS_CONFIG,
     async (event, projects: Project[]) => {
@@ -15,11 +27,10 @@ export const startListen = () => {
   ipcMain.on(IPC_MESSAGES.GET_PROJECTS, async (event) => {
     try {
       const projects = await jsonFile.readFile(PROJECTS_CONFIG_PATH);
-  
+
       event.sender.send(IPC_MESSAGES.GET_PROJECTS, projects);
-      
     } catch (error) {
-      return Promise.reject(null)
+      return Promise.reject(null);
     }
   });
 };

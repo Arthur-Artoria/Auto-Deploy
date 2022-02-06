@@ -4,6 +4,7 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AppTextField } from './AppTextField';
 import { ProjectDeploys } from './ProjectDeploys';
+import { ProjectFilePaths } from './ProjectFilePaths';
 
 interface ProjectProperties {
   project: Project;
@@ -69,6 +70,9 @@ export function ProjectForm({ project, onSubmit }: ProjectProperties) {
               label: '请输入构建命令'
             }}
           />
+
+          {/* FilePaths */}
+          <ProjectFilePaths />
 
           {/* Deploys */}
           <ProjectDeploys deploys={deploys} />

@@ -34,5 +34,8 @@ declare interface Project {
   build?: {
     command: string;
   };
+
   deploys: ProjectDeploy[];
+
+  filePaths: string[];
 }

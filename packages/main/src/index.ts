@@ -1,8 +1,8 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import { join } from 'path';
 import { URL } from 'url';
-import './security-restrictions';
 import { startListen } from './ipc';
+import './security-restrictions';
 const isSingleInstance = app.requestSingleInstanceLock();
 const isDevelopment = import.meta.env.MODE === 'development';
 
@@ -98,10 +98,5 @@ if (import.meta.env.PROD) {
     .catch((e) => console.error('Failed check updates:', e));
 }
 
-ipcMain.on('OPEN_FILE_EXPLORER', async (event) => {
-  const res = await dialog.showOpenDialog({ properties: ['openDirectory'] });
-  console.log(res);
-  event.sender.send('OPEN_FILE_EXPLORER', res);
-});
 
 startListen();

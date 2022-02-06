@@ -1,6 +1,10 @@
 import type { BinaryLike } from 'crypto';
 import { createHash } from 'crypto';
-import { contextBridge, ipcRenderer } from 'electron';
+import {
+  contextBridge,
+  OpenDialogOptions,
+  OpenDialogReturnValue
+} from 'electron';
 import { IPC_MESSAGES } from './constants/common';
 import { ipcPromise } from './tools/common';
 /**
@@ -34,13 +38,11 @@ export const nodeCrypto = {
     return hash.digest('hex');
   },
 
-  openFileExplorer() {
-    return new Promise<Electron.OpenDialogReturnValue>((resolve) => {
-      ipcRenderer.send('OPEN_FILE_EXPLORER');
-      ipcRenderer.once('OPEN_FILE_EXPLORER', (_event, data) => {
-        resolve(data);
-      });
-    });
+  openFileExplorer(options?: OpenDialogOptions) {
+    return ipcPromise<OpenDialogReturnValue>(
+      IPC_MESSAGES.OPEN_FILE_EXPLORER,
+      options
+    );
   },
 
   saveProjectsConfig(projects: Project[]) {

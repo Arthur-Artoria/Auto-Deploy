@@ -19,7 +19,8 @@ function getDefaultProject(projects: Project[]): Project {
     build: { command: 'yarn build' },
     deploys: [
       { id: uuid(), type: DeployTypes.SSH, content: { host: '', username: '' } }
-    ]
+    ],
+    filePaths: ['']
   };
 
   return project;
