@@ -1,20 +1,10 @@
 import AddIcon from '@mui/icons-material/Add';
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  Grid,
-  Typography
-} from '@mui/material';
+import { Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material';
 import React, { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectCard } from './components/ProjectCard';
 import { useProjects, useProjectsDispatch } from './hooks/ProjectsContext';
-import {
-  ProjectsRecucerActionType,
-  projectsReducer,
-  ProjectsReducerAction
-} from './hooks/ProjectsReducer';
+import { ProjectsRecucerActionType, projectsReducer, ProjectsReducerAction } from './hooks/ProjectsReducer';
 
 function ProjectCreateCard() {
   return (

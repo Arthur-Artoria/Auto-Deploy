@@ -7,17 +7,12 @@ interface AppTextFieldProperties extends UseControllerProps<Project> {
   textFieldProps?: TextFieldProps;
 }
 
-export function AppTextField({
-  textFieldProps = {},
-  ...props
-}: AppTextFieldProperties) {
+export function AppTextField({ textFieldProps = {}, ...props }: AppTextFieldProperties) {
   return (
     <FormField
       defaultValue=""
       {...props}
-      render={({ field }) => (
-        <TextField margin="normal" {...{ ...field, ...textFieldProps }} />
-      )}
+      render={({ field }) => <TextField margin="normal" {...{ ...field, ...textFieldProps }} />}
     />
   );
 }

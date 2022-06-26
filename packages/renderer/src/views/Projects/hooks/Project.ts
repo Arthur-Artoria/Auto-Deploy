@@ -20,7 +20,7 @@ function getDefaultProject(projects: Project[]): Project {
     deploys: [
       { id: uuid(), type: DeployTypes.SSH, content: { host: '', username: '' } }
     ],
-    filePaths: ['']
+    filePaths: []
   };
 
   return project;

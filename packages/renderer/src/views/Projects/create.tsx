@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProjectForm } from './components/ProjectForm';
 import { useProject } from './hooks/Project';
 import { useProjects, useProjectsDispatch } from './hooks/ProjectsContext';
-import {
-  ProjectsRecucerActionType,
-  projectsReducer,
-  ProjectsReducerAction
-} from './hooks/ProjectsReducer';
+import { ProjectsRecucerActionType, projectsReducer, ProjectsReducerAction } from './hooks/ProjectsReducer';
 import { useToast } from '/@/hooks/useToast';
 
 export function CreateProject() {

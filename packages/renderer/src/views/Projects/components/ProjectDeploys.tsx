@@ -33,7 +33,7 @@ function ProjectDeploy() {
   const handleDeployEnvironmentChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const deploy = getValues(`${name}`);
+    const deploy = getValues(name);
     const nextDeployType: DeployTypes = event.target.value as DeployTypes;
     const nextDeployContent = deployContentCache.get(nextDeployType);
 
@@ -46,7 +46,7 @@ function ProjectDeploy() {
       content: nextDeployContent
     };
 
-    setValue(`${name}`, nextDeploy as ProjectDeploy);
+    setValue(name, nextDeploy as ProjectDeploy);
   };
 
   return (
