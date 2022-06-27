@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { AppTextField } from './AppTextField';
 import { ProjectDeploys } from './ProjectDeploys';
 import { ProjectFilePaths } from './ProjectFilePaths';
+import { ProjectRemotePath } from './ProjectRemotePath';
+import { ProjectRemoteShell } from './ProjectRemoteShell';
 
 interface ProjectProperties {
   project: Project;
@@ -76,6 +78,10 @@ export function ProjectForm({ project, onSubmit }: ProjectProperties) {
 
           {/* Deploys */}
           <ProjectDeploys deploys={deploys} />
+
+          <ProjectRemotePath />
+
+          <ProjectRemoteShell />
 
           {/* Submit */}
           <footer className="flex justify-center">

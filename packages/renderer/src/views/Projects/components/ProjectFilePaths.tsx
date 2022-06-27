@@ -55,7 +55,9 @@ export function ProjectFilePaths() {
   };
 
   const handleDeleteClick = (filePathIndex: number) => {
-    const newFilePaths = filePaths.filter((_, index) => index !== filePathIndex);
+    const newFilePaths = filePaths.filter(
+      (_, index) => index !== filePathIndex
+    );
 
     setFilePaths(newFilePaths);
   };
@@ -65,10 +67,16 @@ export function ProjectFilePaths() {
       <div className="flex justify-between items-center">
         <FormLabel>请填写待上传文件路径</FormLabel>
         <div className="space-x-2">
-          <Button onClick={() => handleSelectFilePath('openFile')} variant="outlined">
+          <Button
+            onClick={() => handleSelectFilePath('openFile')}
+            variant="outlined"
+          >
             选择文件
           </Button>
-          <Button onClick={() => handleSelectFilePath('openDirectory')} variant="outlined">
+          <Button
+            onClick={() => handleSelectFilePath('openDirectory')}
+            variant="outlined"
+          >
             选择文件夹
           </Button>
         </div>

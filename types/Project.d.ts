@@ -38,4 +38,8 @@ declare interface Project {
   deploys: ProjectDeploy[];
 
   filePaths: string[];
+
+  remotePath: string;
+
+  remoteShell?: string;
 }
