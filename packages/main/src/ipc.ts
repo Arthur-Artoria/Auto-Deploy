@@ -2,17 +2,18 @@ import { dialog, ipcMain, OpenDialogOptions } from 'electron';
 import jsonFile from 'jsonfile';
 import { IPC_MESSAGES } from '../../preload/src/constants/common';
 import { PROJECTS_CONFIG_PATH } from './constants';
+import { buildProject } from './deploy/build';
 
 export const startListen = () => {
   ipcMain.on(
     IPC_MESSAGES.OPEN_FILE_EXPLORER,
     async (
       event,
-      options: OpenDialogOptions = {properties: ['openDirectory']}
+      options: OpenDialogOptions = { properties: ['openDirectory'] }
     ) => {
       const res = await dialog.showOpenDialog(options);
-      
-      event.sender.send('OPEN_FILE_EXPLORER', res);
+
+      event.sender.send(IPC_MESSAGES.OPEN_FILE_EXPLORER, res);
     }
   );
 
@@ -32,5 +33,11 @@ export const startListen = () => {
     } catch (error) {
       return Promise.reject(null);
     }
+  });
+
+  ipcMain.on(IPC_MESSAGES.BUILD_PROJECT, (event, projectID: Project['id']) => {
+    buildProject(projectID)
+      .then(() => event.sender.send(IPC_MESSAGES.BUILD_PROJECT, true))
+      .catch((error) => event.sender.send(IPC_MESSAGES.BUILD_PROJECT, error));
   });
 };
