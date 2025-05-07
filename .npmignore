@@ -1,0 +1,57 @@
+# Source code
+src/
+tests/
+examples/
+
+# Configuration files
+tsconfig.json
+.prettierrc
+.eslintrc
+.eslintignore
+jest.config.js
+babel.config.js
+*.config.example.json
+
+# Development tools
+.vscode/
+.idea/
+.github/
+.gitlab/
+.travis.yml
+.circleci/
+
+# Git files
+.git/
+.gitignore
+
+# Documentation
+docs/
+wiki/
+*.md
+!README.md
+
+# Test files
+__tests__/
+*.spec.*
+*.test.*
+coverage/
+
+# Temporary files
+tmp/
+temp/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env*
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock

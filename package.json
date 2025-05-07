@@ -1,0 +1,49 @@
+{
+  "name": "auto-deploy",
+  "version": "1.0.0",
+  "description": "A CLI tool for automated project building and deployment via SSH",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "auto-deploy": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "prepare": "npm run build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --maxWorkers=2",
+    "precommit": "npm run test",
+    "prepublishOnly": "npm run test:ci && npm run build"
+  },
+  "keywords": [
+    "deploy",
+    "automation",
+    "ssh",
+    "build",
+    "cli"
+  ],
+  "author": "",
+  "license": "ISC",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "node-ssh": "^13.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.12",
+    "esbuild": "^0.25.4",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.2"
+  }
+}

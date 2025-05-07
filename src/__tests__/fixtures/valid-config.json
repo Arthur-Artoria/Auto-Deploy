@@ -1,0 +1,19 @@
+{
+  "projectName": "test-project",
+  "ssh": {
+    "host": "example.com",
+    "port": 22,
+    "username": "test",
+    "password": "test-password"
+  },
+  "build": {
+    "projectPath": "./test-project",
+    "buildCommand": "npm run build",
+    "outputDir": "dist"
+  },
+  "deploy": {
+    "remotePath": "/var/www/test",
+    "backup": true,
+    "backupDir": "/var/www/backups"
+  }
+}
