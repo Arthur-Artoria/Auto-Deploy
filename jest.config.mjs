@@ -1,16 +1,22 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
-module.exports = {
+export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
   testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.ts: [
+      'ts-jest',
+      {
+        useESM: true,
+      },
+    ],
   },
   transformIgnorePatterns: [
     'node_modules/(?!(chalk|#ansi-styles)/)'
   ],
   moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js: '$1',
     '#ansi-styles': 'ansi-styles'
   },
   collectCoverage: true,
@@ -22,5 +28,6 @@ module.exports = {
     '/__tests__/',
   ],
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts']
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
+  extensionsToTreatAsEsm: ['.ts']
 };

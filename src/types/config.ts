@@ -34,15 +34,33 @@ export interface DeployConfig {
 }
 
 /**
- * 完整配置文件接口
+ * 单个项目配置接口
  */
-export interface Config {
+export interface ProjectConfig {
   /** 项目名称 */
-  projectName: string;
+  name: string;
   /** SSH 连接配置 */
   ssh: SSHConfig;
   /** 构建配置 */
   build: BuildConfig;
   /** 部署配置 */
   deploy: DeployConfig;
+}
+
+/**
+ * 完整配置文件接口
+ */
+export interface Config {
+  /** 项目配置映射 */
+  projects: {
+    [key: string]: ProjectConfig;
+  };
+}
+
+/**
+ * 选中的项目配置
+ */
+export interface SelectedConfig extends ProjectConfig {
+  /** 项目ID（配置中的key） */
+  id: string;
 }

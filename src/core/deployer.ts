@@ -1,14 +1,14 @@
-import { Config } from '../types/config.js';
+import { SelectedConfig } from '../types/config.js';
 import { Logger } from '../utils/logger.js';
 import { SSHClient } from '../utils/ssh.js';
 import { Builder } from './builder.js';
 
 export class Deployer {
-  private config: Config;
+  private config: SelectedConfig;
   private sshClient: SSHClient;
   private builder: Builder;
 
-  constructor(config: Config) {
+  constructor(config: SelectedConfig) {
     this.config = config;
     this.sshClient = new SSHClient(config.ssh);
     this.builder = new Builder(config.build);
@@ -19,7 +19,7 @@ export class Deployer {
    */
   async deploy(): Promise<void> {
     try {
-      Logger.task(`Starting deployment for ${this.config.projectName}`);
+      Logger.task(`Starting deployment for ${this.config.name}`);
 
       // 清理并构建项目
       await this.builder.clean();
@@ -51,7 +51,7 @@ export class Deployer {
         this.config.deploy.remotePath
       );
 
-      Logger.success(`Deployment completed successfully for ${this.config.projectName}`);
+      Logger.success(`Deployment completed successfully for ${this.config.name}`);
     } catch (error) {
       Logger.error(`Deployment failed: ${(error as Error).message}`);
       throw error;

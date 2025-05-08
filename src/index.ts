@@ -26,9 +26,9 @@ program
       const configPath = path.resolve(process.cwd(), options.config);
       Logger.debug(`Using config file: ${configPath}`);
 
-      // 加载配置
-      const config = ConfigLoader.loadConfig(configPath);
-      Logger.info(`Loaded configuration for project: ${config.projectName}`);
+      // 加载配置并选择项目
+      const config = await ConfigLoader.loadConfig(configPath);
+      Logger.info(`Loaded configuration for project: ${config.name}`);
 
       // 创建部署器并执行部署
       const deployer = new Deployer(config);
